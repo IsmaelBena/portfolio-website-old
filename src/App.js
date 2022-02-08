@@ -1,23 +1,34 @@
-import logo from './logo.svg';
+// package imports
+import {
+  Routes,
+  Route,
+  useLocation
+} from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
+import { useState } from "react";
+// File imports
 import './App.css';
+import ProjectPage from './project_page/projectPage';
+import ProjectsPage from './projects_page/projectsPage';
+import LandingPage from './landing_page/landingPage';
+import ContactsPage from './contacts_page/contactsPage';
+
 
 function App() {
+  const location = useLocation();
+
+  const [projectPageAnimPos, setProjectPageAnimPos] = useState("temp")
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AnimatePresence exitBeforeEnter initial={false}>
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<LandingPage test={projectPageAnimPos} projectPageAnim={setProjectPageAnimPos} />} />
+          <Route path="/projects" element={<ProjectsPage varient={projectPageAnimPos} projectPageAnim={setProjectPageAnimPos} />} />
+          <Route path="/project/:name" element={<ProjectPage projectPageAnim={setProjectPageAnimPos}/>} />
+          <Route path="/contacts" element={<ContactsPage projectPageAnim={setProjectPageAnimPos}/>} />
+        </Routes>
+      </AnimatePresence>
     </div>
   );
 }

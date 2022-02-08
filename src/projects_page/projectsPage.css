@@ -1,0 +1,122 @@
+.ProjectsPage
+{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ProjectPageContent
+{
+    width: 100%;
+    height: 75%;
+    display: flex;
+    justify-content: center;
+}
+
+.ProjectCardsContainer
+{
+    display: inline-flex;
+    display: flex;
+    padding: 0px 10px 0px 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.ProjectCardsContainer.Full
+{
+    width: 80%;
+}
+
+.ProjectCardsContainer.Filtering
+{
+    width: 50%;
+}
+/*---------------------filter tab--------------------------------*/
+
+.FilterTab
+{
+    background-color: blue;
+    display: inline-block;
+    position: absolute;
+    top: 30px;
+    right: 0px;
+    padding: 5px;
+}
+
+.FilterTab.Active
+{
+    min-width: 150px;
+    width: 10%;
+    max-width: 300px;
+    height: 90%;
+}
+
+.FilterTab.Hidden
+{
+    min-width: 100px;
+    width: 5%;
+    height: fit-content;
+}
+
+/*----------------------Project Cards------------------------------------------*/
+.ProjectCard
+{
+    width: 30%;
+    margin: 10px 5px 10px 5px;
+    height: 125px;
+    border: 2px solid black;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+p
+{
+    padding: 5px;
+}
+
+li
+{
+    list-style: none;
+}
+
+.CardNameField
+{
+    display: flexbox;
+}
+
+.CardAllTags
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    width: 50%;
+}
+
+.ProjectsCardName
+{
+    display: flexbox;
+}
+
+.ProjectsCardField
+{
+    display: flexbox;
+}
+
+.ProjectCardTags
+{
+    display: flexbox;
+    padding: 3px;
+    margin: 2px;
+    border: 1px solid black;
+    border-radius: 5px;
+}

@@ -1,0 +1,25 @@
+.LandingPage
+{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.LandingPageContent
+{
+    width: 90%;
+    margin: 250px;
+}
+
+.Welcome
+{
+    margin: 50px;
+}
+
+.About
+{
+    margin: 50px;
+}
