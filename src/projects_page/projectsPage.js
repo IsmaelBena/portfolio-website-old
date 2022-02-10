@@ -27,15 +27,15 @@ function ProjectsPage(props) {
 
   // Make request to API for project cards content and url and filter content
   let projectPageData = {
-    cardsData: [{name: "Full Project Name blah blah blah blah", field: "game-dev", tags: ["Unity", "C#"]},
-      {name: "Full Project 2 Name", field: "fullstack", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API"]},
-      {name: "Full Project 2 Name", field: "fullstack", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "SQL"]},
-      {name: "Full Project 2 Name", field: "fullstack", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API"]},
-      {name: "Full Project 2 Name", field: "fullstack", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API"]},
-      {name: "Full Project 2 Name", field: "fullstack", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API"]},
-      {name: "Full Project 2 Name", field: "fullstack", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API"]},
-      {name: "Full Project 2 Name", field: "fullstack", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API"]},
-      {name: "Full Project 2 Name", field: "fullstack", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API"]}],
+    cardsData: [{name: "Full Project Name blah blah blah blah", url: "game-project", field: "game-dev", tags: ["Unity", "C#"]},
+      {name: "Full Project 2 Name", field: "fullstack", url: "fullstack-project", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API"]},
+      {name: "Full Project 2 Name", field: "fullstack", url: "fullstack-project", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "SQL"]},
+      {name: "Full Project 2 Name", field: "fullstack", url: "fullstack-project", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API"]},
+      {name: "Full Project 2 Name", field: "fullstack", url: "fullstack-project", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API"]},
+      {name: "Full Project 2 Name", field: "fullstack", url: "fullstack-project", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API"]},
+      {name: "Full Project 2 Name", field: "fullstack", url: "fullstack-project", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API"]},
+      {name: "Full Project 2 Name", field: "fullstack", url: "fullstack-project", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API"]},
+      {name: "Full Project 2 Name", field: "fullstack", url: "fullstack-project", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API"]}],
     filterData: {
       fields: ["fullstack", "game-dev"],
       tags: ["Unity", "C#", "JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API", "SQL"]
@@ -151,7 +151,7 @@ function ProjectsPage(props) {
     }
     return <>
       {filteredProjectData.map((card) => 
-        <ProjectCard name={card.name} field={card.field} tags={card.tags}/>
+        <ProjectCard name={card.name} field={card.field} tags={card.tags} url={card.url} projectsAnim={setExitAnim}/>
       )}
     </>
   }
@@ -168,13 +168,14 @@ function ProjectsPage(props) {
     <motion.div 
       className="ProjectsPage"
       initial={ props.varient }
-      animate={{ translateY: '0%' }}
+      animate={{ translateY: '0%', translateX: '0%' }}
       exit={ exitAnim }
       variants={ variants }
       transition={{ duration: 1 }}  
     >
       <PageNavButton link="/" location="Landing" direction="up" hasFunc={true} projectsAnim={setExitAnim} animDir="below"/>
       <h1>{props.varient}</h1>
+      <h1>{exitAnim}</h1>
       <div className='ProjectPageContent'>
         <div className={filtering ? 'ProjectCardsContainer Filtering ContentBox' : 'ProjectCardsContainer Full ContentBox'}>
           {displayProjectCards()}

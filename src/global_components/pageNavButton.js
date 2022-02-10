@@ -6,7 +6,7 @@ function PageNavButton(props) {
 
   return (
     <Link to={props.link} className="PageNavButton" onClick={props.hasFunc ? () => props.projectsAnim(props.animDir) : null}>
-      <p>{props.location}</p>
+      <p>{props.location}{props.animDir}</p>
     </Link>
   );
 }
