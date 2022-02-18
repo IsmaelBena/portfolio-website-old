@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function ProjectCard(props) {
   return (
-    <Link className="ProjectCard" to={"/project/:"+props.url} onClick={() => props.projectsAnim("left")}>
+    <Link className="ProjectCard" to={"/project/"+props.url} onClick={() => props.projectsAnim("left")}>
         <div className='CardNameField'>
             <p className='ProjectCardName'>{props.name}</p>
             <p className='ProjectCardField'>Field: {props.field}</p>

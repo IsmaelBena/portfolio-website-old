@@ -2,11 +2,28 @@ import './projectsPage.css';
 import { motion } from 'framer-motion';
 import PageNavButton from '../global_components/pageNavButton';
 import FilterTab from './filterTab';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ProjectCard from './projectCard';
+import axios from 'axios';
 
 
 function ProjectsPage(props) {
+
+  const [projectPageData, setProjectPageData] = useState()
+  const [loadingData, setLoadingData] = useState(true)
+
+  const getData = async () => {
+    axios.get('http://localhost:8000/projects/cards').then(res => {
+      console.log(res.status)
+      setProjectPageData(res.data)
+      setLoadingData(false)
+    })
+  }
+
+  useEffect(() => {
+    setLoadingData(true)
+    getData();
+  }, [])
 
   const [filtering, setFiltering] = useState(false);
 
@@ -26,7 +43,7 @@ function ProjectsPage(props) {
   }
 
   // Make request to API for project cards content and url and filter content
-  let projectPageData = {
+  /*let projectPageData = {
     cardsData: [{name: "Full Project Name blah blah blah blah", url: "game-project", field: "game-dev", tags: ["Unity", "C#"]},
       {name: "Full Project 2 Name", field: "fullstack", url: "fullstack-project", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API"]},
       {name: "Full Project 2 Name", field: "fullstack", url: "fullstack-project", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "SQL"]},
@@ -40,7 +57,7 @@ function ProjectsPage(props) {
       fields: ["fullstack", "game-dev"],
       tags: ["Unity", "C#", "JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API", "SQL"]
     }
-  }
+  }*/
 
   let filteredProjectData = [];
 
@@ -174,14 +191,17 @@ function ProjectsPage(props) {
       transition={{ duration: 1 }}  
     >
       <PageNavButton link="/" location="Landing" direction="up" hasFunc={true} projectsAnim={setExitAnim} animDir="below"/>
-      <h1>{props.varient}</h1>
-      <h1>{exitAnim}</h1>
-      <div className='ProjectPageContent'>
-        <div className={filtering ? 'ProjectCardsContainer Filtering ContentBox' : 'ProjectCardsContainer Full ContentBox'}>
-          {displayProjectCards()}
+      {!loadingData ?         
+        <div className='ProjectPageContent'>
+          <div className={filtering ? 'ProjectCardsContainer Filtering ContentBox' : 'ProjectCardsContainer Full ContentBox'}>
+            {displayProjectCards()}
+          </div>
+          <FilterTab active={filtering} toggleActive={toggleActive} filterData={projectPageData.filterData} updateFilterData={updateFilterData}/>
+        </div> :
+        <div className='ProjectPageContent'>
+          <h1>Loading Data</h1>
         </div>
-        <FilterTab active={filtering} toggleActive={toggleActive} filterData={projectPageData.filterData} updateFilterData={updateFilterData}/>
-      </div>
+      }
       <PageNavButton link="/contacts" location="Contacts" direction="down" hasFunc={true} projectsAnim={setExitAnim} animDir="above"/>
     </motion.div>
   );
