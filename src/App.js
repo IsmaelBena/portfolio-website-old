@@ -19,8 +19,6 @@ function App() {
 
   const [projectPageAnimPos, setProjectPageAnimPos] = useState("temp")
 
-  const []
-
   return (
     <div className="App">
       <AnimatePresence exitBeforeEnter initial={false}>
