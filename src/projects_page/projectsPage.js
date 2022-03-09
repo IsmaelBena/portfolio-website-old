@@ -176,19 +176,19 @@ function ProjectsPage(props) {
   const [exitAnim, setExitAnim] = useState("");
 
   const variants = {
-    above: { translateY: '-100%' },
-    below: { translateY: '100%' },
-    left: { translateX: '-100%' }
+    above: { translateY: '-50%', opacity: 0 },
+    below: { translateY: '50%', opacity: 0 },
+    left: { translateX: '-50%', opacity: 0 }
   }
 
   return (
     <motion.div 
       className="ProjectsPage"
       initial={ props.varient }
-      animate={{ translateY: '0%', translateX: '0%' }}
+      animate={{ translateY: '0%', translateX: '0%', opacity: 1 }}
       exit={ exitAnim }
       variants={ variants }
-      transition={{ duration: 1 }}  
+      transition={{ duration: 0.5 }}  
     >
       <PageNavButton link="/" location="Landing" direction="up" hasFunc={true} projectsAnim={setExitAnim} animDir="below"/>
       {!loadingData ?         

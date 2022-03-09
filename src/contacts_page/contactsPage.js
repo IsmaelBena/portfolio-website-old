@@ -12,9 +12,9 @@ function ContactsPage(props) {
     <motion.div 
     className="ContactsPage"
     initial={{ translateY: '100%' }}
-    animate={{ translateY: '0%' }}
+    animate={{ translateY: '0%', opacity: 1 }}
     exit={{ translateY: '100%' }}
-    transition={{ duration: 1 }}  
+    transition={{ duration: 0.5 }}  
     >
       <h1>Contacts Page</h1>
     </motion.div>

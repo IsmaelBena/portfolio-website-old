@@ -31,10 +31,10 @@ function ProjectPage(props) {
   return (
     <motion.div 
     className="ProjectPage"
-    initial={{ translateX: '100%' }}
-    animate={{ translateX: '0%' }}
-    exit={{ translateX: '100%' }}
-    transition={{ duration: 1 }}
+    initial={{ translateX: '100%', opacity: 0 }}
+    animate={{ translateX: '0%', opacity: 1 }}
+    exit={{ translateX: '100%', opacity: 0 }}
+    transition={{ duration: 0.5 }}
     >
       <div className='BackBtnDiv'>
         <PageNavButton link="/projects" location="Projects" direction="left" hasFunc={false}/>
@@ -65,13 +65,20 @@ function ProjectPage(props) {
             }
           </div>
           <div className='ProjectVideo ContentBox'>
-            {!loadingData ? <>{projectData.video} will be embedded here</> :
+            {!loadingData ? <iframe width="400" 
+                height="300" 
+                src={projectData.video} 
+                title="YouTube video player" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen="true">
+              </iframe> :
                 <p>loading tags</p>
             }
           </div>
           {!loadingData ? (projectData.otherLinks === undefined) ? null : <div className='ProjectLinks ContentBox'>
             {projectData.otherLinks.map((link, index) => {
-            return <p key={index}>{link}</p>
+            return <a href={link} target="_blank" key={index}>{link}</a>
           })} </div> :
           <div className='ProjectLinks ContentBox'>
               <p>loading links</p>

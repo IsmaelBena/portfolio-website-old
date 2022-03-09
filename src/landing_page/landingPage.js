@@ -13,10 +13,10 @@ function LandingPage(props) {
   return (
     <motion.div 
       className="LandingPage"
-      initial={{ translateY: '-100%' }}
-      animate={{ translateY: '0%' }}
-      exit={{ translateY: '-100%' }}
-      transition={{ duration: 1 }}
+      initial={{ translateY: '-50%', opacity: 0 }}
+      animate={{ translateY: '0%', opacity: 1 }}
+      exit={{ translateY: '-50%', opacity: 0 }}
+      transition={{ duration: 0.5 }}
     >
       <div className='LandingPageContent'>
         <h1 className='Welcome'>Hi, Welcome to my portfolio. {props.test}</h1>
