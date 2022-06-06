@@ -1,10 +1,18 @@
 .ProjectPage
 {
-    background-color: yellow;
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    overflow-x: hidden;
+}
+
+.ProjectPage::-webkit-scrollbar {
+    display: none;
 }
 
 .BackBtnDiv
@@ -12,64 +20,140 @@
     width: 100%;
     height: fit-content;
     display: flex;
+    align-self: flex-start;
 }
 
 .ProjectContent
 {
+    margin-top: 200px;
     display: flex;
-    height: calc(100% - 100px);
-    flex-direction: row;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
-.ProjectNameAndDescDiv
+.singleCol
+{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1000px;
+    width: 90%;
+    height: 100%;
+    background-color: #e5e5e5;
+    box-shadow: 5px 5px 2px 2px #B5B5B5;
+    border-radius: 10px;
+}
+
+.doubleColContainer
+{
+    display: flex;
+    flex-direction: row;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 1000px;
+    height: 100%;
+}
+
+.leftCol
+{
+    margin: 5px;
+    padding: 15px;
+    background-color: #e5e5e5;
+    box-shadow: 5px 5px 2px 2px #B5B5B5;
+    border-radius: 10px;
+    width: 550px;
+}
+
+.rightCol
 {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-end;
-    height: 100%;
-    width: 70%;
+    align-items: center;
+    margin: 5px;
+    background-color: #e5e5e5;
+    box-shadow: 5px 5px 2px 2px #B5B5B5;
+    border-radius: 10px;
 }
 
 .ProjectName
 {
     height: fit-content;
-    width: 80%;
+    width: 100%;
     text-align: center;
-    margin: 0px 2.5% 0px 0px;
+    margin-top: 50px;
 }
 
 .ProjectDescription
 {
-    height: 80%;
-    width: 80%;
-    margin: 2.5% 2.5% 2.5% 0px;
-}
-
-.ProjectTagsVidLinksDiv
-{
-    height: 100%;
-    width: 30%;
+    height: fit-content;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
+}
+
+.DescHeader
+{
+    box-sizing: border-box;
+    padding-top: 15px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    text-align: start;
+    width: 100%;
+}
+
+.DescBody
+{
+    box-sizing: border-box;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: start;
 }
 
 .ProjectTags
 {
-    height: 75px;
-    width: 80%;
+    height: fit-content;
+    width: calc(100%-50px);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 25px;
+}
+
+.Tag
+{
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+    box-sizing: border-box;
 }
 
 .ProjectVideo
 {
-    height: 500px;
-    width: 80%;
+    margin: 25px;
 }
 
 .ProjectLinks
 {
-    height: 200px;
-    width: 80%;
+    margin: 25px;
+    align-self: flex-start;
+    text-align: start;
+    height: fit-content;
+}
+
+.ProjectLinks > h3
+{
+    margin: 5px 0px 5px 0px;
+}
+
+.ProjectLinks > a
+{
+    margin: 5px 0px 5px 10px;
 }

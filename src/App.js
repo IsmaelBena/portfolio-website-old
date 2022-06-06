@@ -17,16 +17,16 @@ import ContactsPage from './contacts_page/contactsPage';
 function App() {
   const location = useLocation();
 
-  const [projectPageAnimPos, setProjectPageAnimPos] = useState("temp")
+  const [navBarEntryAnim, setNavBarEntryAnim] = useState(false)
 
   return (
     <div className="App">
-      <AnimatePresence exitBeforeEnter initial={false}>
+      <AnimatePresence exitBeforeEnter initial={true}>
         <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<LandingPage test={projectPageAnimPos} projectPageAnim={setProjectPageAnimPos} />} />
-          <Route path="/projects" element={<ProjectsPage varient={projectPageAnimPos} projectPageAnim={setProjectPageAnimPos} />} />
-          <Route path="/project/:name" element={<ProjectPage projectPageAnim={setProjectPageAnimPos}/>} />
-          <Route path="/contacts" element={<ContactsPage projectPageAnim={setProjectPageAnimPos}/>} />
+          <Route path="/" element={<LandingPage setNavBarEntryAnim={setNavBarEntryAnim}/>} />
+          <Route path="/projects" element={<ProjectsPage navBarEntryAnim={navBarEntryAnim} setNavBarEntryAnim={setNavBarEntryAnim} />} />
+          <Route path="/project/:name" element={<ProjectPage navBarEntryAnim={navBarEntryAnim} setNavBarEntryAnim={setNavBarEntryAnim}/>} />
+          <Route path="/contacts" element={<ContactsPage navBarEntryAnim={navBarEntryAnim} setNavBarEntryAnim={setNavBarEntryAnim}/>} />
         </Routes>
       </AnimatePresence>
     </div>

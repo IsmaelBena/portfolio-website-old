@@ -36,7 +36,8 @@ a
 {
   width: 100vw;
   height: 100vh;
-  background-color: aqua;
+  background-image: url('./images/global-bg.jpg');
+  background-size: cover;
   overflow: hidden;
 }
 

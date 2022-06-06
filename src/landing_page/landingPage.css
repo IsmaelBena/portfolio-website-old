@@ -1,3 +1,5 @@
+/*====================Mobile first=======================================*/
+
 .LandingPage
 {
     width: 100vw;
@@ -6,20 +8,142 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 
-.LandingPageContent
+.MobileNav
 {
-    width: 90%;
-    margin: 250px;
+    height: 10%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.LandingToProjects
+{
+    background-image: url('../images/projects-background.jpg');
+    background-size: cover;
+    background-position-y: 20%;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.LandingProjectsText
+{
+    color: grey;
+    font-size: 8vw;
+    -webkit-text-stroke: 1px #e8e8e8;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.LandingPageText
+{
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.LandingToContacts
+{
+    background-image: url('../images/socials-bg.jpg');
+    background-size: cover;
+    background-position-x: 60%;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.LandingContactsText
+{
+    color: grey;
+    font-size: 8vw;
+    -webkit-text-stroke: 1px #e8e8e8;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .Welcome
 {
     margin: 50px;
+    font-size: 6vw;
 }
 
 .About
 {
     margin: 50px;
+    font-size: 4vw;
+}
+
+/*====================Desktop========================================*/
+@media only screen and (min-width: 820px) {
+    .LandingPage
+    {
+        flex-direction: row;
+    }
+
+    .LandingToProjects
+    {
+        background-position-x: 50%;
+        width: 30%;
+        height: 100%;
+        -webkit-box-shadow: 0px 0px 5px 2px #000000; 
+        box-shadow: 0px 0px 5px 2px #000000;
+    }
+
+    .LandingProjectsText
+    {
+        font-size: 5vw;
+    }
+
+    .LandingPageText
+    {
+        width: 40%;
+        height: 100%;
+    }
+
+    .LandingToContacts
+    {
+        width: 30%;
+        height: 100%;
+        -webkit-box-shadow: 0px 0px 10px 3px #000000; 
+        box-shadow: 0px 0px 10px 3px #000000;
+    }
+
+    .LandingContactsText
+    {
+        font-size: 5vw;
+    }
+
+    .Welcome
+    {
+        margin: 50px;
+        font-size: 2vw;
+    }
+    
+    .About
+    {
+        margin: 50px;
+        font-size: 1.25vw;
+    }
 }

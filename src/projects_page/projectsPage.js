@@ -1,13 +1,18 @@
 import './projectsPage.css';
-import { motion } from 'framer-motion';
+import { animate, AnimatePresence, motion } from 'framer-motion';
 import PageNavButton from '../global_components/pageNavButton';
 import FilterTab from './filterTab';
 import { useEffect, useState } from 'react';
 import ProjectCard from './projectCard';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import NavBar from '../global_components/NavBar';
+import { useMediaPredicate } from "react-media-hook";
 
 
 function ProjectsPage(props) {
+
+  const desktop = useMediaPredicate("(min-width: 820px)");
 
   const [projectPageData, setProjectPageData] = useState()
   const [loadingData, setLoadingData] = useState(true)
@@ -21,15 +26,15 @@ function ProjectsPage(props) {
   }
 
   useEffect(() => {
-    setLoadingData(true)
+    props.setNavBarEntryAnim(false)
     getData();
   }, [])
 
   const [filtering, setFiltering] = useState(false);
 
   const [methodOfFilter, setMethodOfFilter] = useState("and");
-  const [fieldsSelected, setFieldsSelected] = useState(["fullstack"]);
-  const [tagsSelected, setTagsSelected] = useState(["API"]);
+  const [fieldsSelected, setFieldsSelected] = useState([]);
+  const [tagsSelected, setTagsSelected] = useState([]);
 
   const updateFilterData = (filterMethod, fields, tags) => {
     setMethodOfFilter(filterMethod);
@@ -41,23 +46,6 @@ function ProjectsPage(props) {
     setFiltering(!filtering);
     console.log(filtering);
   }
-
-  // Make request to API for project cards content and url and filter content
-  /*let projectPageData = {
-    cardsData: [{name: "Full Project Name blah blah blah blah", url: "game-project", field: "game-dev", tags: ["Unity", "C#"]},
-      {name: "Full Project 2 Name", field: "fullstack", url: "fullstack-project", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API"]},
-      {name: "Full Project 2 Name", field: "fullstack", url: "fullstack-project", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "SQL"]},
-      {name: "Full Project 2 Name", field: "fullstack", url: "fullstack-project", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API"]},
-      {name: "Full Project 2 Name", field: "fullstack", url: "fullstack-project", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API"]},
-      {name: "Full Project 2 Name", field: "fullstack", url: "fullstack-project", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API"]},
-      {name: "Full Project 2 Name", field: "fullstack", url: "fullstack-project", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API"]},
-      {name: "Full Project 2 Name", field: "fullstack", url: "fullstack-project", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API"]},
-      {name: "Full Project 2 Name", field: "fullstack", url: "fullstack-project", tags: ["JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API"]}],
-    filterData: {
-      fields: ["fullstack", "game-dev"],
-      tags: ["Unity", "C#", "JavaScript", "TypeScript", "ReactJS", "NodeJS", "ExpressJS", "MongoDB", "API", "SQL"]
-    }
-  }*/
 
   let filteredProjectData = [];
 
@@ -168,41 +156,83 @@ function ProjectsPage(props) {
     }
     return <>
       {filteredProjectData.map((card) => 
-        <ProjectCard name={card.name} field={card.field} tags={card.tags} url={card.url} projectsAnim={setExitAnim}/>
+        <ProjectCard name={card.name} field={card.field} tags={card.tags} url={card.url}/>
       )}
     </>
   }
 
-  const [exitAnim, setExitAnim] = useState("");
+  const projectContainerAnim = {
+    hidden: {
+      opacity: 0,
+      marginLeft: '50px',
+      transition: {
+        when: "beforeChildren",
+        staggerChildren: 0.05,
+        staggerDirection: -1,
+        duration: 0.25
+      }
+    },
+    visibleNoFilter: {
+      opacity: 1,
+      marginLeft: '50px',
+      transition: {
+        when: "beforeChildren",
+        staggerChildren: 0.5,
+        duration: 0.5
+      }
+    },
+    visibleFiltering: {
+      opacity: 1,
+      marginLeft: '350px',
+      transition: {
+        delayChildren: 1,
+        staggerChildren: 0.5,
+        duration: 0.5
+      }
+    },
+    visibleFilteringMobile: {
+      opacity: 1,
+      marginLeft: '50px',
+      transition: {
+        delayChildren: 1,
+        staggerChildren: 0.5,
+        duration: 0.5
+      }
+    },
+    exit: {
+      opacity: 0,
+      translateX: "-100%"
+    }
+  };
 
-  const variants = {
-    above: { translateY: '-50%', opacity: 0 },
-    below: { translateY: '50%', opacity: 0 },
-    left: { translateX: '-50%', opacity: 0 }
+  const cardsContainerState = (isDesktop, isFiltering) => {
+    if (!isDesktop && isFiltering) return "visibleFilteringMobile";
+    else if (isFiltering) return "visibleFiltering";
+    else return "visibleNoFilter";
   }
 
   return (
-    <motion.div 
-      className="ProjectsPage"
-      initial={ props.varient }
-      animate={{ translateY: '0%', translateX: '0%', opacity: 1 }}
-      exit={ exitAnim }
-      variants={ variants }
-      transition={{ duration: 0.5 }}  
-    >
-      <PageNavButton link="/" location="Landing" direction="up" hasFunc={true} projectsAnim={setExitAnim} animDir="below"/>
-      {!loadingData ?         
-        <div className='ProjectPageContent'>
-          <div className={filtering ? 'ProjectCardsContainer Filtering ContentBox' : 'ProjectCardsContainer Full ContentBox'}>
-            {displayProjectCards()}
-          </div>
+    <motion.div className="ProjectsPage">
+      <NavBar navBarEntryAnim={props.navBarEntryAnim} showFilterBar={true} pageHeader="Projects" redirectLocation="/" exitAnim={false} filtering={filtering} toggleActive={toggleActive} loadingData={loadingData} />
+      <div className='ProjectsPageContent'>
+        {!loadingData ? 
+        <>
           <FilterTab active={filtering} toggleActive={toggleActive} filterData={projectPageData.filterData} updateFilterData={updateFilterData}/>
-        </div> :
-        <div className='ProjectPageContent'>
-          <h1>Loading Data</h1>
-        </div>
-      }
-      <PageNavButton link="/contacts" location="Contacts" direction="down" hasFunc={true} projectsAnim={setExitAnim} animDir="above"/>
+          <motion.ul className='ProjectCardsContainer'
+            variants={projectContainerAnim}
+            initial="hidden"
+            animate={cardsContainerState(desktop, filtering)}
+          >
+              {displayProjectCards()}
+          </motion.ul>
+        </> :
+        <motion.h1 
+          initial={{opacity: 0}}
+          animate={{opacity: 1}}
+          transition={{duration: 3}}
+        >Loading Projects</motion.h1>
+        }
+      </div>
     </motion.div>
   );
 }

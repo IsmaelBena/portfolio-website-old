@@ -4,88 +4,137 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import {useLocation} from 'react-router-dom'
+import NavBar from '../global_components/NavBar';
+import { useMediaPredicate } from "react-media-hook";
 
 function ProjectPage(props) {
 
   const location = useLocation();
+  const desktop = useMediaPredicate("(min-width: 1050px)");
 
   const [projectData, setProjectData] = useState()
   const [loadingData, setLoadingData] = useState(true)
 
+  const [singleCol, setSingleCol] = useState(false)
+
   const getData = async () => {
     axios.get(`http://localhost:8000/projects${location.pathname}`).then(res => {
-      console.log(res.status)
-      console.log(location)
-      setProjectData(res.data)
-      console.log(res.data)
-      setLoadingData(false)
+      console.log(res.status);
+      console.log(location);
+      setProjectData(res.data);
+      console.log(res.data);
+      setLoadingData(false);
+      if (res.data.otherLinks.length < 1 && res.data.video === undefined) {setSingleCol(true)};
     })
   }
 
   useEffect(() => {
-    props.projectPageAnim("left");
-    setLoadingData(true)
+    console.log(props.navBarEntryAnim)
+    props.setNavBarEntryAnim(false)
+    desktop ? setSingleCol(false) : setSingleCol(true)
     getData();
   }, [])
 
+  useEffect(() => {
+    desktop ? setSingleCol(false) : setSingleCol(true)
+  }, [desktop])
+
   return (
-    <motion.div 
-    className="ProjectPage"
-    initial={{ translateX: '100%', opacity: 0 }}
-    animate={{ translateX: '0%', opacity: 1 }}
-    exit={{ translateX: '100%', opacity: 0 }}
-    transition={{ duration: 0.5 }}
-    >
-      <div className='BackBtnDiv'>
-        <PageNavButton link="/projects" location="Projects" direction="left" hasFunc={false}/>
-      </div>
-      <div className='ProjectContent'>
-        <div className='ProjectNameAndDescDiv'>
-          <div className='ProjectName ContentBox'>
-            {!loadingData ? <h1>{projectData.name}</h1> : <h1>loading data</h1>}
+    <motion.div className="ProjectPage">
+      <NavBar navBarEntryAnim={props.navBarEntryAnim} showFilterBar={false} projectProgress={loadingData ? "Loading Project Progress" : projectData.progress} pageHeader={loadingData ? "Loading Project Name" : projectData.name} redirectLocation="/projects" exitAnim={false}/>
+      {
+        !loadingData ? 
+        <motion.div 
+        className='ProjectContent'
+        initial={{ translateX: '25%', opacity: 0 }}
+        animate={{ translateX: '0%', opacity: 1 }}
+        exit={{ translateX: '25%', opacity: 0 }}
+        transition={{ duration: 0.5 }}
+        >
+          { singleCol ? <>
+            <div className='singleCol'>
+              <div className='ProjectDescription'>
+                <>{projectData.description.map((txt, index) => {
+                if (txt.textType === "header") {
+                  return <h3 className='DescHeader' key={index}>{txt.text}</h3>
+                }
+                else if (txt.textType === "body") {
+                  return <p className='DescBody' key={index}>{txt.text}</p>
+                }
+                else return <p>something went wrong</p>
+                }) }</>
+              </div>
+              {(projectData.video === undefined) ? null : 
+                <div className='ProjectVideo'>
+                  <iframe width="348" 
+                    height="261" 
+                    src={projectData.video} 
+                    title="YouTube video player" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen="true">
+                  </iframe>
+                </div>}
+                <div className='ProjectTags'>
+                  <>{projectData.tags.map((tag, index) => {
+                    return <p className='Tag' key={index}>{tag}</p>
+                  })}</>
+                </div>
+                {(projectData.otherLinks.length < 1) ? null :
+                  <div className='ProjectLinks'>
+                    <h3>Other Projects Links:</h3>
+                    <>{projectData.otherLinks.map((link, index) => {
+                      return <a href={link} target="_blank" key={index}>{link}</a>
+                    })}</>
+                  </div>          
+                }
+            </div>
+          </> : 
+          <div className='doubleColContainer'>
+            <div className='leftCol'>
+              <div className='ProjectDescription'>
+                  <>{projectData.description.map((txt, index) => {
+                  if (txt.textType === "header") {
+                    return <h3 className='DescHeader' key={index}>{txt.text}</h3>
+                  }
+                  else if (txt.textType === "body") {
+                    return <p className='DescBody' key={index}>{txt.text}</p>
+                  }
+                  else return <p>something went wrong</p>
+                  }) }</>
+                </div>
+            </div>
+            <div className='rightCol'>
+              <div className='ProjectVideo'>
+                <iframe width="400" 
+                  height="300" 
+                  src={projectData.video} 
+                  title="YouTube video player" 
+                  frameborder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowfullscreen="true">
+                </iframe>
+              </div>
+              <div className='ProjectTags'>
+                <>{projectData.tags.map((tag, index) => {
+                  return <p className='Tag' key={index}>{tag}</p>
+                })}</>
+              </div>
+              {(projectData.otherLinks.length < 1) ? null :
+                  <div className='ProjectLinks'>
+                    <h3>Other Projects Links:</h3>
+                    <>{projectData.otherLinks.map((link, index) => {
+                      return <a href={link} target="_blank" key={index}>{link}</a>
+                    })}
+                    </>
+                  </div>          
+                }
+            </div>
           </div>
-          <div className='ProjectDescription ContentBox'>
-          {!loadingData ?  <>{projectData.description.map((txt, index) => {
-            if (txt.textType === "header") {
-              return <h2 key={index}>{txt.text}</h2>
-            }
-            else if (txt.textType === "body") {
-              return <p key={index}>{txt.text}</p>
-            }
-            else return <p>something went wrong</p>
-            }) }</> : <h1>loading project description</h1>}
-          </div>
-        </div>
-        <div className='ProjectTagsVidLinksDiv'>     
-          <div className='ProjectTags ContentBox'>
-            {!loadingData ? <> {projectData.tags.map((tag, index) => {
-              return <p key={index}>{tag}</p>
-            })}</> :
-              <p>loading tags</p>
-            }
-          </div>
-          <div className='ProjectVideo ContentBox'>
-            {!loadingData ? <iframe width="400" 
-                height="300" 
-                src={projectData.video} 
-                title="YouTube video player" 
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-              allowfullscreen="true">
-              </iframe> :
-                <p>loading tags</p>
-            }
-          </div>
-          {!loadingData ? (projectData.otherLinks === undefined) ? null : <div className='ProjectLinks ContentBox'>
-            {projectData.otherLinks.map((link, index) => {
-            return <a href={link} target="_blank" key={index}>{link}</a>
-          })} </div> :
-          <div className='ProjectLinks ContentBox'>
-              <p>loading links</p>
-          </div>            
-          }          
-        </div>
-      </div>
+          }
+        </motion.div>
+        : <h1>Loading project data</h1>
+      }
     </motion.div>
   );
 }
