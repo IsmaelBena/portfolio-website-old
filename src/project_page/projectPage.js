@@ -24,7 +24,7 @@ function ProjectPage(props) {
       setProjectData(res.data);
       console.log(res.data);
       setLoadingData(false);
-      if (res.data.otherLinks.length < 1 && res.data.video === undefined) {setSingleCol(true)};
+      if (res.data.otherLinks.length < 1 && !("video" in projectData)) {setSingleCol(true)};
     })
   }
 
@@ -64,10 +64,10 @@ function ProjectPage(props) {
                 else return <p>something went wrong</p>
                 }) }</>
               </div>
-              {(projectData.video === undefined) ? null : 
+              {!("video" in projectData) ? null :
                 <div className='ProjectVideo'>
                   <iframe width="348" 
-                    height="261" 
+                    height="261"
                     src={projectData.video} 
                     title="YouTube video player" 
                     frameborder="0" 
@@ -105,16 +105,18 @@ function ProjectPage(props) {
                 </div>
             </div>
             <div className='rightCol'>
-              <div className='ProjectVideo'>
-                <iframe width="400" 
-                  height="300" 
-                  src={projectData.video} 
-                  title="YouTube video player" 
-                  frameborder="0" 
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                  allowfullscreen="true">
-                </iframe>
-              </div>
+              {!("video" in projectData) ? null :
+                <div className='ProjectVideo'>
+                  <iframe width="400" 
+                    height="300" 
+                    src={projectData.video} 
+                    title="YouTube video player" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen="true">
+                  </iframe>
+                </div>
+              }
               <div className='ProjectTags'>
                 <>{projectData.tags.map((tag, index) => {
                   return <p className='Tag' key={index}>{tag}</p>

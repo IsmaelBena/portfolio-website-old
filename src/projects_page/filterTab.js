@@ -53,7 +53,7 @@ function FilterTab(props) {
         initial="hidden"
         animate={props.active ? 'active' : 'hidden'}
         exit="hidden"
-        transition={{duration: 0.5}}
+        transition={{duration: 0.25}}
         variants={variants}
       >
         <div className='methodOfFilterRadioBtns'>

@@ -177,8 +177,8 @@ function ProjectsPage(props) {
       marginLeft: '50px',
       transition: {
         when: "beforeChildren",
-        staggerChildren: 0.5,
-        duration: 0.5
+        staggerChildren: 0.25,
+        duration: 0.25
       }
     },
     visibleFiltering: {
@@ -186,8 +186,8 @@ function ProjectsPage(props) {
       marginLeft: '350px',
       transition: {
         delayChildren: 1,
-        staggerChildren: 0.5,
-        duration: 0.5
+        staggerChildren: 0.25,
+        duration: 0.25
       }
     },
     visibleFilteringMobile: {
@@ -195,8 +195,8 @@ function ProjectsPage(props) {
       marginLeft: '50px',
       transition: {
         delayChildren: 1,
-        staggerChildren: 0.5,
-        duration: 0.5
+        staggerChildren: 0.25,
+        duration: 0.25
       }
     },
     exit: {

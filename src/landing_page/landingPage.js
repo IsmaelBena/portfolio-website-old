@@ -11,6 +11,11 @@ function LandingPage(props) {
   const desktop = useMediaPredicate("(min-width: 820px)");
   const navigate = useNavigate();
 
+  const landingText = () => {return <>
+    <h1 className='Welcome'>Hi, Welcome to my portfolio. {props.test}</h1>
+    <h2 className='About'>I am a computer science graduate with a passion for technology and software development. I enjoy learning new technologies and pushing myself to improve my current skillset. This website displays some of the technical knowledge I’ve picked up since I started university through various projects I’ve completed. There are plans to upgrade and improve this website over time as I develop as a computer scientist.</h2>
+  </>}
+
   useEffect(() => {
     props.setNavBarEntryAnim(true)
   }, [])
@@ -39,8 +44,7 @@ function LandingPage(props) {
             exit={{  translateY: '-50%', opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className='Welcome'>Hi, Welcome to my portfolio. {props.test}</h1>
-            <h2 className='About'>Anim velit sunt sint do est tempor irure eu cillum et. Mollit excepteur adipisicing anim excepteur ad nostrud ea aliqua adipisicing aliqua laborum aliqua ad est. Aliqua aute nostrud veniam irure incididunt elit tempor deserunt. Excepteur esse dolore aliquip quis nostrud occaecat. Sit exercitation nisi exercitation consequat aute minim ipsum amet Lorem sint dolore exercitation. Irure anim exercitation irure aliquip cillum sit culpa culpa anim cillum. Nulla nisi ipsum officia proident sunt.</h2>
+            {landingText()}
           </motion.div>
           <motion.div className='LandingToContacts'
               initial={{ translateX: '50%', opacity: 0 }}
@@ -59,8 +63,7 @@ function LandingPage(props) {
         </> : 
         <>
           <div className='LandingPageText'>
-            <h1 className='Welcome'>Hi, Welcome to my portfolio. {props.test}</h1>
-            <h2 className='About'>Anim velit sunt sint do est tempor irure eu cillum et. Mollit excepteur adipisicing anim excepteur ad nostrud ea aliqua adipisicing aliqua laborum aliqua ad est. Aliqua aute nostrud veniam irure incididunt elit tempor deserunt. Excepteur esse dolore aliquip quis nostrud occaecat. Sit exercitation nisi exercitation consequat aute minim ipsum amet Lorem sint dolore exercitation. Irure anim exercitation irure aliquip cillum sit culpa culpa anim cillum. Nulla nisi ipsum officia proident sunt.</h2>
+            {landingText()}
           </div>
           <div className='MobileNav'>
             <div className='LandingToProjects'
